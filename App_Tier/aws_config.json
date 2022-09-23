@@ -1,0 +1,9 @@
+{
+    "accessKey":"AKIAWJFQG7POSE4UBR7C",
+    "secretKey":"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",
+    "awsRegion":"us-east-1",
+    "queueUrl":"https://sqs.us-east-1.amazonaws.com/432013769693/cc-input-image-queue",
+    "input":"INPUT",
+    "inputBucket":"cloudcomputinginputbucket",
+    "outputBucket":"https://sqs.us-east-1.amazonaws.com/432013769693/cc-output-response-queue"
+}

@@ -1,0 +1,5 @@
+{
+    "inputBucket":"cloudcomputinginputbucket",
+    "inputQueue":"https://sqs.us-east-1.amazonaws.com/432013769693/cc-input-image-queue",
+    "outputQueue":"https://sqs.us-east-1.amazonaws.com/432013769693/cc-output-response-queue"
+}
