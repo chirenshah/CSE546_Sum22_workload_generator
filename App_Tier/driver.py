@@ -18,7 +18,7 @@ s3 = session.client('s3')
 while True:
     try:
         response = sqs.receive_message(
-            QueueUrl=config["queueUrl"],
+            QueueUrl=config["inputQueue"],
             MaxNumberOfMessages=10,
             WaitTimeSeconds=10
         )
@@ -33,7 +33,7 @@ while True:
         print(messages)
     except:
         print("No messages in the queue")
-        input("Press a Key")
+        print(input("Press a Key"))
         continue
 
     for message in messages:
@@ -49,7 +49,7 @@ while True:
         image_file = open(image_file_full_path, 'wb')
         image_file.write(image_base64)
         image_file.close()
-        s3.upload_file(image_file_full_path, config["inputBucket"], image_store_filename)
+        s3.upload_file(image_file_full_path, config["inputBucket"],image_file)
         try:
             input,output = classification(image_file_full_path)
         except:
@@ -60,7 +60,7 @@ while True:
                 'timestamp': datetime.datetime.now().isoformat()
                 })
         r = sqs.send_message(
-            QueueUrl=config["outputBucket"],
+            QueueUrl=config["outputQueue"],
             DelaySeconds=5,
             MessageAttributes={
                 'Title': {
@@ -71,8 +71,9 @@ while True:
             MessageBody=json.dumps(message)
         )
         sqs.delete_message(
-                    QueueUrl=config["queueUrl"],
+                    QueueUrl=config["inputQueue"],
                     ReceiptHandle=receipt
-                )
+        )
+        s3.upload_file(image_store_filename,config["outputBucket"],output)
         
     

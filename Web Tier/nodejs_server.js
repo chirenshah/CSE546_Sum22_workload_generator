@@ -44,16 +44,9 @@ server.post("/", upload.single("myfile"), function (request, respond) {
 
   const replyListener = () => {
     var params = {
-      AttributeNames: [
-         "SentTimestamp"
-      ],
-      MaxNumberOfMessages: 10,
-      MessageAttributeNames: [
-         "All"
-      ],
       QueueUrl: config.outputQueue,
-      VisibilityTimeout: 20,
-      WaitTimeSeconds: 0
+      MaxNumberOfMessages: 10,
+      WaitTimeSeconds: 10
      };
     SQS.receiveMessage(
       params,
